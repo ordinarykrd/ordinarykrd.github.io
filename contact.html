@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ordinary Travel Co.</title>
     <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
 </head>
 
 <body>
@@ -18,61 +19,25 @@
                 <a href="./index.html">Home</a>
                 <a href="./flight_itinerary.html">Flight Itinerary</a>
                 <a href="./hotel_reservation.html">Hotel Reservation</a>
-                <a href="./contact.html">Contact</a>
+                <a href="./contact">Contact</a>
             </nav>
         </header>
 
         <section class="content-section">
-            <h2>About</h2>
-            <p>Ordinary is a fairly new travel agency in Erbil that started in 2024. It was founded by two young friends who
-                have 4 years of experience in tourism guidance and visa consultancy. We believe in being honest and
-                providing quality service. That's how we run our business.</p>
+            <h2>Visit Our Office</h2>
+            <p>Find us in the heart of Erbil, Kurdistan. We're here to help you with all your travel needs, from visa
+                applications to flight bookings and hotel reservations.</p>
+
+            <p><strong>Saturday - Thursday:</strong> 10:00 AM - 6:00 PM</p>
+            <p><strong>Friday:</strong> Closed</p>
+            <p style="margin-top: 16px; color: #666; font-size: 13px;">
+                We respond to messages outside office hours as well!
+            </p>
         </section>
 
-        <section class="content-section">
-            <h2>Our Mission</h2>
-            <p>Our mission is to establish a new standard of transparency in Kurdistan's travel industry. We provide
-                clients with accurate visa assessments, honest consultancy, and fair pricing from the start. We
-                prioritize long-term client relationships over short-term profits, ensuring that every recommendation we
-                make serves our clients' best interests, even when that means declining business.</p>
-        </section>
+        <div id="map"></div>
 
-        <section class="content-section">
-            <h2>Services</h2>
-            <div class="services-grid">
-                <div class="service-card">
-                    <h3>Visa Consultancy</h3>
-                    <p>Get straight answers and real advice about your visa options. We'll review your situation before
-                        you apply, so you don't waste money on a visa that might get rejected</p>
-                </div>
-                <div class="service-card">
-                    <h3>Hotel Reservation</h3>
-                    <p>We'll help you find good hotel prices around the world. Use our deals to stay somewhere that
-                        works for you and fits your budget.</p>
-                </div>
-                <div class="service-card">
-                    <h3>Ticket Reservation</h3>
-                    <p>We'll help you find the best routes and lowest prices for your flights. Let us search for options
-                        that save you time and money.</p>
-                </div>
-                <div class="service-card">
-                    <h3>Translation</h3>
-                    <p>Get your documents translated accurately between Kurdish, English, and Arabic. We make sure your
-                        translations are correct and reliable.</p>
-                </div>
-                <div class="service-card">
-                    <h3>Transfer</h3>
-                    <p>Don't worry about the high prices of airport taxis, we will arrange your ride when arriving in an airport.</p>
-                </div>
-                <div class="service-card">
-                    <h3>Travel Insurance</h3>
-                    <p>Travel without worry by protecting yourself and your belongings. Get coverage for unexpected
-                        problems that might happen during your trip.</p>
-                </div>
-            </div>
-        </section>
     </div>
-
     <footer>
         <div class="footer-container">
             <div class="footer-content">
@@ -141,7 +106,57 @@
             </div>
         </div>
     </footer>
-    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+    <script>
+        // Initialize the map centered on Erbil, Kurdistan
+        const map = L.map('map').setView([36.1907774, 43.9581234], 13);
+
+        // Add OpenStreetMap tile layer
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '© OpenStreetMap contributors',
+            maxZoom: 19
+        }).addTo(map);
+
+        // Add marker for Ordinary Travel office
+        const officeMarker = L.marker([36.1907774, 43.9581234]).addTo(map);
+
+        // Add popup to the marker
+        officeMarker.bindPopup(`
+            <div style="padding: 8px;">
+                <h3>Ordinary Travel Co.</h3>
+                <p><strong>Address:</strong><br>32 Park, opposite High Performance Company<br>Erbil, Kurdistan, Iraq</p>
+                <p><strong>Phone:</strong> +964-750-552-2909</p>
+                <p><a href="https://maps.app.goo.gl/AMEkQFVEKGx2Pje66" target="_blank" style="color: #ff2a2a;">Get Directions →</a></p>
+            </div>
+        `).openPopup();
+
+        // Optional: Add more markers for nearby landmarks
+        const landmarkMarkers = [
+            {
+                coords: [36.196322, 43.977850],
+                name: "VFS Global Visa Center",
+                description: "Visa application center for Germany, Hungary, United Kingdom etc."
+            },
+            {
+                coords: [36.217566, 44.004801],
+                name: "TLSContact",
+                description: "Visa application center for France and Belgium."
+            }
+        ];
+
+        landmarkMarkers.forEach(landmark => {
+            L.marker(landmark.coords, {
+                opacity: 0.7
+            }).addTo(map)
+                .bindPopup(`
+                <div style="padding: 8px;">
+                    <h3 style="font-size: 14px; color: #444;">${landmark.name}</h3>
+                    <p style="font-size: 12px; margin: 4px 0;">${landmark.description}</p>
+                </div>
+            `);
+        });
+    </script>
 </body>
 
 </html>
